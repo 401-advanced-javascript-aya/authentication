@@ -1,0 +1,31 @@
+{
+  "name": "authentication",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint '**/*.js'",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest --coverage --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/401-advanced-javascript-aya/authentication.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/401-advanced-javascript-aya/authentication/issues"
+  },
+  "homepage": "https://github.com/401-advanced-javascript-aya/authentication#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jest": "^26.6.1",
+    "mongoose": "^5.10.10",
+    "morgan": "^1.10.0"
+  }
+}
