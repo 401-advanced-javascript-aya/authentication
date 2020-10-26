@@ -42,14 +42,5 @@ function users(req, res, next) {
     .catch(next);
 }
 
-function deleting(req, res, next) {
-  req.model
-    .delete(req.params.id)
-    .then((data) => {
-      let results = data;
-      res.status(200).json({ results });
-    })
-    .catch(next);
-}
 
 module.exports = app;
