@@ -1,8 +1,9 @@
 'use strict';
 
 const userModel = require('./users-collection');
-const Collection = require('../mongo');
-
+const jwt = require('jsonwebtoken');
+const Collection = require('../models/mongo');
+const SECRET = process.env.SECRET || 'mySecret'
 class Users extends Collection {
   constructor() {
     super(userModel);
@@ -11,8 +12,9 @@ class Users extends Collection {
     console.log('userscollection page: record',record)
 
     // Hash the plain text password given before you save a user to the database
-    let userDB = await USERS.findOne({ username: record.username });
+    let userDB = await this.get( record.username );
     console.log('userscollection page: userDB before',userDB)
+    // 
     if (!userDB) {
       record.password = await bcrypt.hash(record.password, 5);
       userDB = record;
@@ -24,7 +26,7 @@ class Users extends Collection {
 
   // Create a method in the schema to authenticate a user using the hashed password
   async authenticateBasic (user, password) {
-    let userDB = await USERS.findOne({ username: user });
+    let userDB = await this.get({ username: user });
     console.log('userscollection page: userDB (authenticatebasic function)',userDB)
 
     if (userDB) {
@@ -39,10 +41,26 @@ class Users extends Collection {
   async generateToken (user) {
     const token = jwt.sign({ username: user.username }, SECRET);
     return token;
-  };
+  }
+
+  authenticateToken = async function (token) {
+    try {
+      const tokenObject = jwt.verify(token, SECRET);
+      console.log('TOKEN OBJECT', tokenObject);
+      let userDB = await this.get( tokenObject );
+      if (userDB) {
+        return Promise.resolve(tokenObject);
+      } else {
+        return Promise.reject();
+      }
+    } catch (e) {
+      return Promise.reject(e.message);
+    }
+  }
   
-  list(_id){
-   return Users.find({});
+  list(record){
+    console.log('lllllllllllll',record);
+   return this.get(record);
   }
 
 }

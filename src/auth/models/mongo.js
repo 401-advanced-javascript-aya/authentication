@@ -6,7 +6,7 @@ class Collection {
   }
 
   get(_id) {
-    const query = _id ? { _id } : {};
+    let query = _id !== undefined ? { username: _id } : {};
     return this.model.find(query);
   }
 

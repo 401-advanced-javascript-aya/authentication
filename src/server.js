@@ -10,16 +10,16 @@ const cors = require('cors');
 // app.use('/', ctgRouter);
 
 
-app.use(cors);
-app.use(morgan());
+app.use(cors());
+app.use(morgan('dev'));
 
 app.use(express.json());
 
-app.use('/', apiRout);
-
-app.get('/', (req, res) => {
+app.get('/welcome', (req, res) => {
   res.send('Welcome!');
 });
+app.use(apiRout);
+
 
 app.use(error500);
 app.use('*', error404);
