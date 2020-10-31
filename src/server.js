@@ -1,25 +1,21 @@
+'use srtict';
 const express = require('express');
-const morgan = require('morgan');
 const app = express();
+const cors = require('cors');
+const morgan = require('morgan');
+const apiRout = require('./auth/router');
 const error404 = require('./middleware/404');
 const error500 = require('./middleware/500');
-const apiRout = require('./auth/router');
-const cors = require('cors');
-
-
-// app.use('/', ctgRouter);
-
-
-app.use(cors());
-app.use(morgan('dev'));
 
 app.use(express.json());
+app.use(cors());
+app.use(morgan('dev'));
 
 app.get('/welcome', (req, res) => {
   res.send('Welcome!');
 });
-app.use(apiRout);
 
+app.use(apiRout);
 
 app.use(error500);
 app.use('*', error404);

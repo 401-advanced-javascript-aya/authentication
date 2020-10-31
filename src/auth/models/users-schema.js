@@ -1,21 +1,30 @@
+'use strict';
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+const SECRET = process.env.SECRET || 'SECRET';
 
 const userSchema = mongoose.Schema({
-  userName: { type: String, require: true },
-  Password: { type: String, require: true },
+  username: { type: String, required: true },
+  password: { type: String, required: true },
   email: { type: String },
   role: { type: String, enum: ['admin', 'editor', 'writer', 'user'] },
 });
+
 userSchema.pre('save', async function() {
   this.password = await bcrypt.hash(this.password, 10); /// hashing password then save in db
 });
 
 // user.methods >>>> adding methods to the schema 
+// compare the password with the encrypted one
 userSchema.methods.comparePasswords = async function (password) {
   const valid = await bcrypt.compare(password, this.password); 
   return valid ? this : null;
 };
 
+//user.statics >>>> adding static functions to the schema. 
 userSchema.statics.generateToken = function (username) {
   return jwt.sign({ username: username }, SECRET);
 };
