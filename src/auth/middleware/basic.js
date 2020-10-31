@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
       const authBasic = req.headers.authorization.split(' ').pop(); // ["basic YWhtYWRfc2hlbGEgOjEyMzQ="]
       console.log('authBasic', authBasic);
   
-      let [username, pass] = base64.decode(authBasic).split(':'); // "Raghad:1234"
+      let [username, pass] = base64.decode(authBasic).split(':'); // "aya:1234"
       // const [userName, pass] = base64.decode(auth[1]).split(':'); /// if we did not use pop
       console.log('__BasicAuth__', username, pass);
       // we have the user obj
