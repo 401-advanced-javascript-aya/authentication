@@ -1,35 +1,27 @@
+'use strict';
+require('dotenv').config(); 
 const express = require('express');
-const morgan = require('morgan');
 const app = express();
-const error404 = require('./middleware/404');
-const error500 = require('./middleware/500');
-const apiRout = require('./auth/router');
 const cors = require('cors');
-
-
-// app.use('/', ctgRouter);
-
-
-app.use(cors);
-app.use(morgan());
+const morgan = require('morgan');
+const router = require('./auth/router.js');
 
 app.use(express.json());
+app.use(cors());
+app.use(morgan('dev'));
 
-app.use('/', apiRout);
+const status_404 = require('./middleware/404.js');
+const status_500 = require('./middleware/500.js');
 
-app.get('/', (req, res) => {
-  res.send('Welcome!');
-});
+app.use('/', router);
 
-app.use(error500);
-app.use('*', error404);
+app.use('*', status_404);
+app.use(status_500);
 
 module.exports = {
   server: app,
-  start: (port) => {
-    app.listen(port, () => {
-      const PORT = port || process.env.PORT || 3000;
-      console.log(`up and running on port ${PORT}`);
-    });
+  start: PORT => {
+    PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
   },
 };
