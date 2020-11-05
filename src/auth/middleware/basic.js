@@ -1,25 +1,37 @@
 'use strict';
 
 const base64 = require('base-64');
-const users = require('../models/users-model');
+const users = require('../models/users-schema');
 
 module.exports = (req, res, next) => {
   console.log('req.headers.authorization', req.headers.authorization);
   if (!req.headers.authorization) {
-    next('Invalid Login');
-  } else {
-    const authBasic = req.headers.authorization.split(' ').pop(); 
-    console.log('authBasic', authBasic);
-    let [userName, pass] = base64.decode(authBasic).split(':'); 
-    console.log('__BasicAuth__', userName, pass);
-    users.authenticate(userName, pass).then((validUser) => {
+    next('Missing Headers!');
+    return;
 
-      console.log('validUser', validUser);
+  }  
+  const authBasic = req.headers.authorization.split(' ').pop(); // ["basic YWhtYWRfc2hlbGEgOjEyMzQ="]
+  console.log('authBasic', authBasic);
 
-      req.token = users.generateToken(validUser);
-      req.userName = validUser;
-      console.log('req.token', req.token);
-      next();
-    }).catch((err) => next(err));
-  }
+  let [username, pass] = base64.decode(authBasic).split(':'); // "Raghad:1234"
+  console.log('__BasicAuth__', username, pass);
+  users.authenticate(username, pass).then(validUser => {
+    console.log('validUser ....basic',validUser);
+    if (!validUser) {
+      return next('Wrong Useranem or Password');
+    }
+    console.log('validUser', validUser);
+
+    let token = users.generateToken(validUser.username);
+    if (token) {
+      req.basicAuth = {
+        token: token,
+        user: validUser,
+      };
+    }
+    next();
+
+  }).catch(err => next(err));
+
+  
 };

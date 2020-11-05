@@ -17,4 +17,9 @@ In this case, users should be automatically assigned the role of user
 5- Once logged in, Users can then access any route on the server, so long as they are permitted by the capabilities that match their role.
 For example, a route that deletes records should only work if your user role is “admin”
 
+UML lab 11
 ![](UML.jpg)
+
+UML lab 12
+
+![](UMLauth.jpg)
