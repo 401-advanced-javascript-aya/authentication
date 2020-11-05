@@ -13,12 +13,12 @@ const userSchema = mongoose.Schema({
   role: { type: String, enum: ['admin', 'editor', 'writer', 'user'] },
 });
 
-userSchema.pre('save', async function() {
-  this.password = await bcrypt.hash(this.password, 5); 
+userSchema.pre('save', async function () {
+  this.password = await bcrypt.hash(this.password, 5);
 });
 
 userSchema.methods.comparePasswords = async function (password) {
-  const valid = await bcrypt.compare(password, this.password); 
+  const valid = await bcrypt.compare(password, this.password);
   return valid ? this : null;
 };
 
@@ -38,13 +38,13 @@ userSchema.statics.authenticate = async function (username, password) {
 };
 
 userSchema.statics.authenticateToken = async function (token) {
-  
+
   try {
     let tokenObject = jwt.verify(token, SECRET);
-    console.log('tokenObject ', tokenObject); 
+    console.log('tokenObject ', tokenObject);
 
-    let tokenDB = await this.findOne({ username: tokenObject.username }); 
-    console.log('tokenDB ', tokenDB); 
+    let tokenDB = await this.findOne({ username: tokenObject.username });
+    console.log('tokenDB ', tokenDB);
 
     if (tokenDB) {
       return Promise.resolve({

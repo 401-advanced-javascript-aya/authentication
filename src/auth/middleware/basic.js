@@ -9,14 +9,14 @@ module.exports = (req, res, next) => {
     next('Missing Headers!');
     return;
 
-  }  
+  }
   const authBasic = req.headers.authorization.split(' ').pop(); // ["basic YWhtYWRfc2hlbGEgOjEyMzQ="]
   console.log('authBasic', authBasic);
 
   let [username, pass] = base64.decode(authBasic).split(':'); // "Raghad:1234"
   console.log('__BasicAuth__', username, pass);
   users.authenticate(username, pass).then(validUser => {
-    console.log('validUser ....basic',validUser);
+    console.log('validUser ....basic', validUser);
     if (!validUser) {
       return next('Wrong Useranem or Password');
     }
@@ -33,5 +33,5 @@ module.exports = (req, res, next) => {
 
   }).catch(err => next(err));
 
-  
+
 };

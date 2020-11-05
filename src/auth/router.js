@@ -21,8 +21,8 @@ async function signupHandler(req, res) {
     } else {
       let user = new users(req.body);
 
-      user.save().then((user) => { 
-        let token = users.generateToken(user.username); 
+      user.save().then((user) => {
+        let token = users.generateToken(user.username);
         res.status(200).send(token);
       });
     }
@@ -43,7 +43,7 @@ function signinHandler(req, res) {
 function usersHandler(req, res) {
   if (req.basicAuth.token) {
     users.find().then(result => {
-      res.status(200).json({numberOfUsers: result.length, TheList: result});
+      res.status(200).json({ numberOfUsers: result.length, TheList: result });
     });
   } else {
     res.status(403).send('Invalid login ,,,usersHandler ');
@@ -51,11 +51,11 @@ function usersHandler(req, res) {
 }
 
 function handleSecret(req, res) {
-  console.log('req.user',req.user);
+  console.log('req.user', req.user);
   res.status(200).send(req.user);
 }
 
-router.get('/oauth',oauth,(req,res)=>{
+router.get('/oauth', oauth, (req, res) => {
   res.status(200).send(req.token);
 
 });
