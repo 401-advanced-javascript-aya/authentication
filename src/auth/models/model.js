@@ -10,10 +10,6 @@ class Model {
   constructor(schema) {
     this.schema = schema;
   }
-  /**
- * 
- * @param {object} record 
- */
 
   async create(record) {
 

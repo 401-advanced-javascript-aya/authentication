@@ -12,11 +12,6 @@ router.post('/signin', basicAuth, signinHandler);
 router.get('/:model', usersHandler);
 
 
-/**
- * for signup 
- * @param {object} req 
- * @param {object} res 
- */
 
 async function signupHandler(req, res) {
   let model = req.body
@@ -33,12 +28,7 @@ async function signupHandler(req, res) {
   }
 }
 
-/**
- * for signin 
- * @param {object} req 
- * @param {object} res 
- * @param {object} next 
- */
+
 
 function signinHandler(req, res, next) {
   console.log('signinHandler');
@@ -46,12 +36,7 @@ function signinHandler(req, res, next) {
     user: req.user, 
   });
 }
-/**
- * for getting all users 
- * @param {object} req 
- * @param {object} res 
- * @param {object} next 
- */
+
 
 async function usersHandler(req, res, next) {
   console.log('model <<< users');

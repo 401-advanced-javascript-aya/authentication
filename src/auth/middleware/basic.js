@@ -3,13 +3,6 @@
 const base64 = require('base-64');
 const users = require('../models/users-model');
 
-/**
- * // this is used for signin authorization
- * @param {object} req 
- * @param {object} res 
- * @param {object} next 
- */
-
 module.exports = (req, res, next) => {
   console.log('req.headers.authorization', req.headers.authorization);
   if (!req.headers.authorization) {

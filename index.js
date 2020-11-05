@@ -4,7 +4,7 @@ const server = require('./src/server');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-
+// to start the server
 const MONGODB_URI =
   process.env.MONGODB_URI || 'mongodb+srv://aya93:good401@signinup.pdwy6.mongodb.net/sign?retryWrites=true&w=majority';
 
