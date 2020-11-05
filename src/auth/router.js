@@ -14,8 +14,8 @@ router.get('/:model', usersHandler);
 
 
 async function signupHandler(req, res) {
-  let model = req.body
-  console.log(model);;
+  let model = req.body;
+  console.log(model);
   try {
     let modelll = await users.create(model);
     res.status(200).json(modelll);
