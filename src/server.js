@@ -5,6 +5,8 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const router = require('./auth/router.js');
+// const port = process.env.PORT || 3000
+app.use(express.static('./public'));
 
 app.use(express.json());
 app.use(cors());
@@ -20,8 +22,10 @@ app.use(status_500);
 
 module.exports = {
   server: app,
-  start: PORT => {
-    PORT = process.env.PORT || 4000;
-    app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+  start: (port) => {
+    app.listen(port, () => {
+      const PORT = port || process.env.PORT || 3000;
+      console.log(`up and running on port ${PORT}`);
+    });
   },
 };
