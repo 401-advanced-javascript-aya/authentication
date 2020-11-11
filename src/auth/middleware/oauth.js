@@ -36,7 +36,7 @@ async function exchangeCodeWithToken(code) {
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
     code: code,
-    redirect_uri: 'http://localhost:4000/oauth',
+    redirect_uri: 'https://auth-aya.herokuapp.com/oauth',
   });
   console.log('exchangeCodeWithToken response ----> ', response.body);
   return response.body.access_token;
